@@ -32,7 +32,7 @@ def check_file(file_path: Path, config: dict[str, Any], console: Console) -> boo
     table = Table(
         show_header=True,
         header_style="bold magenta",
-        title=f"[cyan]{file_path.name}[/cyan]",
+        title=f"[cyan]{file_path.absolute()}[/cyan]",
     )
     table.add_column("Metric", style="dim")
     table.add_column("Value", justify="right")

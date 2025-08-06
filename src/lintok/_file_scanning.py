@@ -6,9 +6,10 @@ from typing import Any
 import pathspec
 
 
-def _gather_files(paths: list[str]) -> set[Path]:
+def _gather_files(paths: list[str]) -> tuple[set[Path], set[Path]]:
     """Collect all files from the given paths."""
     all_files: set[Path] = set()
+    original_files: set[Path] = set()
     for path_str in paths:
         path = Path(path_str)
         if not path.exists():
@@ -16,8 +17,8 @@ def _gather_files(paths: list[str]) -> set[Path]:
         if path.is_dir():
             all_files.update(p.resolve() for p in path.rglob("*") if p.is_file())
         elif path.is_file():
-            all_files.add(path.resolve())
-    return all_files
+            original_files.add(path.resolve())
+    return all_files, original_files
 
 
 def _apply_gitignore(
@@ -67,10 +68,11 @@ def get_files_to_check(
     paths: list[str], config: dict[str, Any], project_root: Path | None
 ) -> set[Path]:
     """Gather all files from paths, handling directories, and apply exclusion patterns."""
-    all_files = _gather_files(paths)
+    all_files, original_files = _gather_files(paths)
     all_files = _apply_gitignore(all_files, config, project_root)
     exclude_patterns = config.get("exclude", [])
     all_files = _apply_manual_exclude(all_files, exclude_patterns, project_root)
+    all_files.update(original_files)  # Ensure original files are included
     return all_files
 
 

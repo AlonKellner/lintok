@@ -85,6 +85,7 @@ pythonpath = "./"
 max_tokens = 2048
 exclude = [
   "uv.lock",
+  "tests/sample_large_file.txt",
 ]
 
 [tool.typos.files]
