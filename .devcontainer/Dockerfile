@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/devcontainers/base:debian AS default
 USER vscode
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     chmod +x $HOME/.local/bin/uv $HOME/.local/bin/uvx
-ENV PATH="/home/vscode/.local/bin/:$PATH"
+ENV PATH="/home/vscode/.local/bin/:/github/home/.local/bin:$PATH"
 RUN uv self update
 
 USER root

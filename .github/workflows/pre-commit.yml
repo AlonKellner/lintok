@@ -8,8 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: "4alonkellner/lintok-ci:latest"
-      env:
-        PATH: "/github/home/.local/bin:${{ env.PATH }}"
     steps:
       - name: Cache dependencies
         uses: actions/cache@v4
