@@ -34,6 +34,7 @@ optional-dependencies.all = [ "anthropic", "transformers" ]
 optional-dependencies.anthropic = [ "anthropic" ]
 optional-dependencies.huggingface = [ "transformers" ]
 urls = { Homepage = "https://github.com/AlonKellner/lintok.git", Repository = "https://github.com/AlonKellner/lintok.git" }
+
 scripts.lintok = "lintok.cli:main"
 
 [dependency-groups]
