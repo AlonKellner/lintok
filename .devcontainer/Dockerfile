@@ -21,3 +21,4 @@ RUN DEBIAN_FRONTEND=noninteractive mkdir -p /home/vscode/.cache && chmod 777 /ho
 COPY ./.devcontainer/migrate_claude.exp ./
 USER vscode
 RUN expect migrate_claude.exp
+USER root
