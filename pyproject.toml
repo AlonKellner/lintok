@@ -83,7 +83,7 @@ pythonpath = "./"
 [tool.lintok]
 max_tokens = 2048
 exclude = [
-    "uv.lock"
+  "uv.lock",
 ]
 
 [tool.typos.files]

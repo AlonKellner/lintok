@@ -1,13 +1,14 @@
+[env_run_base]
+description = "Run test under {base_python}"
+commands = [ [ "uv", "run", "--active", "pytest" ] ]
+
+[env.check]
+description = "run code check"
+commands = [ [ "pre-commit", "run", "--all-files", "--show-diff-on-failure" ] ]
+
+[env.cov]
+commands = [ [ "pytest", "--cov=src/python_package_2025", "--cov-report=term-missing" ] ]
+
 [tox]
 # The list of environments is now a proper TOML array of strings.
 envlist = [ "py310", "py311", "py312", "py313" ]
-
-[testenv]
-
-[testenv.check]
-description = "run code check"
-skip_install = true
-commands = [ "pre-commit run --all-files --show-diff-on-failure" ]
-
-[testenv.cov]
-commands = [ "pytest --cov=src/python_package_2025 --cov-report=term-missing" ]
