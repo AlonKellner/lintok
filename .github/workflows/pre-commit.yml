@@ -17,6 +17,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}
       - uses: actions/checkout@v4
+      - name: debug
+        run: |
+          pwd
+          ls
       - name: postCreateCommand
         run: .devcontainer/postCreateCommand
       - name: postStartCommand & pre-commit all
