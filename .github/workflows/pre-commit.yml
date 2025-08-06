@@ -17,13 +17,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}
       - uses: actions/checkout@v4
-      - name: debug
-        run: |
-          pwd
-          ls -a
-          git config --global --add safe.directory $(pwd)
-          git config --list --show-origin
+      - name: git safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: postCreateCommand
-        run: .devcontainer/postCreateCommand || cat /github/home/.cache/pre-commit/pre-commit.log
+        run: .devcontainer/postCreateCommand
       - name: postStartCommand & pre-commit all
         run: .devcontainer/postStartCommand
