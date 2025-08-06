@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/base:debian
+FROM mcr.microsoft.com/devcontainers/base:debian AS default
 USER vscode
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     chmod +x $HOME/.local/bin/uv $HOME/.local/bin/uvx
@@ -8,7 +8,7 @@ RUN uv self update
 USER root
 
 COPY dev-pyproject/ ./
-RUN DEBIAN_FRONTEND=noninteractive mkdir /home/vscode/.cache && chmod 777 /home/vscode/.cache && \
+RUN DEBIAN_FRONTEND=noninteractive mkdir -p /home/vscode/.cache && chmod 777 /home/vscode/.cache && \
     echo apt-tools && apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends apt-transport-https \
     ca-certificates gnupg curl pkg-config cmake libssl-dev git expect && \
