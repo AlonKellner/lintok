@@ -28,16 +28,16 @@ classifiers = [
 ]
 
 dynamic = [ "version" ]
-dependencies = [ "anthropic", "pathspec", "rich", "tiktoken", "toml", "transformers" ]
+dependencies = [ "pathspec", "rich", "tiktoken", "toml" ]
 
-# [project.optional-dependencies]
-# cpu = []
-# cuda = []
-
+optional-dependencies.all = [ "anthropic", "transformers" ]
+optional-dependencies.anthropic = [ "anthropic" ]
+optional-dependencies.huggingface = [ "transformers" ]
 urls = { Homepage = "https://github.com/AlonKellner/lintok.git", Repository = "https://github.com/AlonKellner/lintok.git" }
+scripts.lintok = "lintok.cli:main"
 
 [dependency-groups]
-dev = [ "pytest", "pytest-cov" ]
+dev = [ "anthropic", "pytest", "pytest-cov", "tiktoken", "transformers" ]
 
 [tool.hatch.envs.default]
 installer = "uv"
