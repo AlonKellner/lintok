@@ -20,8 +20,8 @@ jobs:
       - name: debug
         run: |
           pwd
-          ls
+          ls -a
       - name: postCreateCommand
-        run: .devcontainer/postCreateCommand
+        run: .devcontainer/postCreateCommand || cat /github/home/.cache/pre-commit/pre-commit.log
       - name: postStartCommand & pre-commit all
         run: .devcontainer/postStartCommand
