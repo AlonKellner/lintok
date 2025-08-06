@@ -23,8 +23,7 @@
 				"astral-sh.ty",
 				"biomejs.biome",
 				"maattdd.gitless",
-				"rafaelha.vscode-flamegraph",
-				"github.vscode-github-actions"
+				"rafaelha.vscode-flamegraph"
 			]
 		}
 	},
