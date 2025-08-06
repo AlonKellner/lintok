@@ -1,0 +1,63 @@
+{
+	"name": "Python 3",
+	"build": {
+		// Path is relative to the devcontainer.json file.
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"charliermarsh.ruff",
+				"ms-azuretools.vscode-docker",
+				"docker.docker",
+				"tamasfe.even-better-toml",
+				"tekumara.typos-vscode",
+				"elagil.pre-commit-helper",
+				"github.copilot",
+				"github.copilot-chat@0.27.2025042503",
+				"astral-sh.ty",
+				"biomejs.biome",
+				"maattdd.gitless",
+				"rafaelha.vscode-flamegraph",
+				"github.vscode-github-actions"
+			]
+		}
+	},
+	"initializeCommand": [
+		"./.devcontainer/initializeCommand",
+		"${containerWorkspaceFolderBasename}",
+		"${localEnv:HOME}${localEnv:USERPROFILE}"
+	],
+	"postCreateCommand": ["./.devcontainer/postCreateCommand"],
+	"postStartCommand": ["./.devcontainer/postStartCommand"],
+	"mounts": [
+		"src=${localWorkspaceFolder},dst=/app,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,dst=/home/vscode/.gitconfig,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,dst=/home/vscode/.ssh,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.vscode-server,dst=/home/vscode/.vscode-server,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cursor,dst=/home/vscode/.cursor,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/uv,dst=/home/vscode/.cache/uv,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pre-commit,dst=/home/vscode/.cache/pre-commit,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip,dst=/home/vscode/.cache/pip,type=bind"
+	],
+	"containerEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
+		"LOCAL_USER_HOME": "${localEnv:HOME}${localEnv:USERPROFILE}",
+		"DOCKER_OPTIONS": "-v '${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig':/root/.gitconfig -v '${localEnv:HOME}${localEnv:USERPROFILE}/.ssh':/root/.ssh -v '${localEnv:HOME}${localEnv:USERPROFILE}/.vscode-server':/root/.vscode-server -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cursor':/root/.cursor -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/uv':/root/.cache/uv -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pre-commit':/root/.cache/pre-commit -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip':/root/.cache/pip",
+		"CONTAINER_IMAGE": "mcr.microsoft.com/devcontainers/base:debian",
+		"USERNAME": "vscode",
+		"COMPOSE_BAKE": "true"
+	},
+	"runArgs": [
+		"--name=${containerWorkspaceFolderBasename}_vsc",
+		"--hostname=${containerWorkspaceFolderBasename}_vsc",
+		"--network=${containerWorkspaceFolderBasename}",
+		"--env-file=.devcontainer/.env",
+		"--shm-size=2g"
+	]
+}

@@ -1,0 +1,4 @@
+match_type: doublestar
+exclude:
+    - "*/**/*charts*/**/*.yaml"
+    - "*/**/*helm*/**/*.yaml"

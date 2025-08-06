@@ -1,0 +1,15 @@
+{
+	"git.autofetch": true,
+	"editor.tabSize": 4,
+	"terminal.integrated.defaultProfile.linux": "zsh",
+	"terminal.integrated.profiles.linux": {
+		"bash": {
+			"path": "bash",
+			"icon": "terminal-bash"
+		},
+		"zsh": {
+			"path": "zsh"
+		}
+	},
+	"github.copilot.chat.codesearch.enabled": true
+}

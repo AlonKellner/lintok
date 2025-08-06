@@ -1,0 +1,187 @@
+{
+	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "docker-image",
+			"type": "promptString",
+			"default": "${env:CONTAINER_IMAGE}",
+			"description": "docker-image"
+		},
+		{
+			"id": "python-package",
+			"type": "promptString",
+			"description": "The python package to add to the project (in the pyproject.toml)."
+		}
+	],
+	"tasks": [
+		{
+			"label": "Run Python (venv)",
+			"type": "shell",
+			"command": "${workspaceFolder}/.venv/bin/python ${fileDirname}/${fileBasenameNoExtension}.py",
+			"hide": false,
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Run Python (docker compose)  ",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Run Python (docker compose)",
+				"Remove Python run (docker)"
+			],
+			"type": "shell",
+			"command": ":",
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Profile Python (venv)",
+			"type": "shell",
+			"command": "uvx py-spy record -f raw -o ${fileDirname}/${fileBasenameNoExtension}.pyspy --subprocesses --full-filenames -r 10 -- ${workspaceFolder}/.venv/bin/python ${fileDirname}/${fileBasenameNoExtension}.py",
+			"hide": false,
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Profile Python (docker compose)  ",
+			"dependsOrder": "sequence",
+			"dependsOn": [
+				"Profile Python (docker compose)",
+				"Remove Python profile (docker)"
+			],
+			"type": "shell",
+			"command": ":",
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Remove Python run (docker)",
+			"type": "shell",
+			"command": "docker stop '${workspaceFolderBasename}_run_${fileBasenameNoExtension}' && docker rm '${workspaceFolderBasename}_run_${fileBasenameNoExtension}' || true",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Remove Python profile (docker)",
+			"type": "shell",
+			"command": "docker stop '${workspaceFolderBasename}_profile_${fileBasenameNoExtension}' && docker rm '${workspaceFolderBasename}_profile_${fileBasenameNoExtension}' || true",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Remove Debugpy server (docker)",
+			"type": "shell",
+			"command": "docker stop '${workspaceFolderBasename}_debug_${fileBasenameNoExtension}' && docker rm '${workspaceFolderBasename}_debug_${fileBasenameNoExtension}' || true",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Run Python (docker compose)",
+			"type": "shell",
+			"command": "docker stop '${workspaceFolderBasename}_run_${fileBasenameNoExtension}' && docker rm '${workspaceFolderBasename}_run_${fileBasenameNoExtension}' || true && WORKDIR=${workspaceFolder} docker compose --project-name ${workspaceFolderBasename}_run --project-directory ${workspaceFolder} --file ${workspaceFolder}/compose.yaml run --build ${env:DOCKER_OPTIONS} -it --tty --name '${workspaceFolderBasename}_run_${fileBasenameNoExtension}' -v \"${env:LOCAL_WORKSPACE_FOLDER}\":${workspaceFolder} ${fileBasenameNoExtension} ${fileDirname}/${fileBasenameNoExtension}.py",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Start Debugpy server (docker compose)",
+			"dependsOn": ["Remove Debugpy server (docker)"],
+			"type": "shell",
+			"command": "WORKDIR=${workspaceFolder} docker compose --project-name ${workspaceFolderBasename}_debug --project-directory ${workspaceFolder} --file ${workspaceFolder}/compose.yaml run --build ${env:DOCKER_OPTIONS} --detach --tty --name '${workspaceFolderBasename}_debug_${fileBasenameNoExtension}' -v \"$(echo '${extensionInstallFolder:ms-python.debugpy}' | sed \"s|${userHome}|$(sed 's|\\\\|/|g' <<< '${env:LOCAL_USER_HOME}')|\")/bundled/libs/debugpy\":/debugpy -v \"${env:LOCAL_WORKSPACE_FOLDER}\":${workspaceFolder} ${fileBasenameNoExtension} /debugpy --wait-for-client --listen 0.0.0.0:5678 ${fileDirname}/${fileBasenameNoExtension}.py && sleep 3s",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": false,
+				"clear": false
+			},
+			"problemMatcher": "$python"
+		},
+		{
+			"label": "Profile Python (docker compose)",
+			"type": "shell",
+			"command": "docker stop '${workspaceFolderBasename}_profile_${fileBasenameNoExtension}' && docker rm '${workspaceFolderBasename}_profile_${fileBasenameNoExtension}' || true && WORKDIR=${workspaceFolder} docker compose --project-name ${workspaceFolderBasename}_profile --project-directory ${workspaceFolder} --file ${workspaceFolder}/compose.yaml run --build ${env:DOCKER_OPTIONS} -it --tty --name '${workspaceFolderBasename}_profile_${fileBasenameNoExtension}' -v \"${env:LOCAL_WORKSPACE_FOLDER}\":${workspaceFolder} --entrypoint 'uvx' ${fileBasenameNoExtension} py-spy record -f raw -o ${fileDirname}/${fileBasenameNoExtension}.pyspy --subprocesses --full-filenames -r 10 -- /app/.venv/bin/python ${fileDirname}/${fileBasenameNoExtension}.py",
+			"hide": true,
+			"group": "none",
+			"presentation": {
+				"echo": false,
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"showReuseMessage": false,
+				"clear": true
+			},
+			"problemMatcher": "$python"
+		}
+	]
+}

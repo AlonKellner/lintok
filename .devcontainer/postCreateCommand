@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+uv python install --preview --default
+uv tool install pre-commit --with pre-commit-uv --force-reinstall
+uv tool install tox --with tox-uv
+pre-commit install --install-hooks -t pre-commit -t commit-msg -t post-commit -t pre-push

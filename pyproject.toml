@@ -1,0 +1,95 @@
+[build-system]
+build-backend = "hatchling.build"
+
+requires = [ "hatch-vcs", "hatchling" ]
+
+[project]
+name = "lintok"
+description = "Linter of file sizes in tokens, for smaller files and faster agent edits."
+readme = "README.md"
+
+keywords = [  ]
+maintainers = [ { name = "Alon Kellner", email = "me@alonkellner.com" } ]
+authors = [ { name = "Alon Kellner", email = "me@alonkellner.com" } ]
+requires-python = ">=3.10.0"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development",
+]
+
+dynamic = [ "version" ]
+dependencies = [ "anthropic", "pathspec", "rich", "tiktoken", "toml", "transformers" ]
+
+# [project.optional-dependencies]
+# cpu = []
+# cuda = []
+
+urls = { Homepage = "https://github.com/AlonKellner/lintok.git", Repository = "https://github.com/AlonKellner/lintok.git" }
+
+[dependency-groups]
+dev = [ "pytest", "pytest-cov" ]
+
+[tool.hatch.envs.default]
+installer = "uv"
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0.dev0"
+tag-pattern = '''^[a-z]+\/(?:[\w-]+-)?(?P<version>[vV]?\d+(?:\.\d+){0,2}[^\+]*)(?:\+.*)?$'''
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/_version.py"
+
+[tool.ruff]
+line-length = 88
+extend-exclude = [ "dev-pyproject/*", "src/_version.py" ]
+respect-gitignore = true
+
+lint.select = [
+  "ANN",
+  "ARG",
+  "B",
+  "D",
+  "E4",
+  "E7",
+  "E9",
+  "F",
+  "I",
+  "PL",
+  "Q",
+  "RUF",
+  "S",
+  "SIM",
+  "TC",
+  "UP",
+]
+lint.ignore = [ "ANN401", "PLR0913", "PLR2004", "S101", "S311" ]
+lint.pydocstyle.convention = "numpy"
+lint.pylint.max-args = 10
+
+[tool.pytest.ini_options]
+pythonpath = "./"
+
+[tool.lintok]
+max_tokens = 2048
+exclude = [
+    "uv.lock"
+]
+
+[tool.typos.files]
+extend-exclude = [ "**/.env.*" ]
+
+[tool.uv]
+package = true
+python-preference = "only-managed"
+link-mode = "copy"

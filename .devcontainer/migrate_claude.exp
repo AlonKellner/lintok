@@ -1,0 +1,14 @@
+#!/usr/bin/expect -f
+
+# Set a timeout for waiting for a response (in seconds)
+set timeout 1
+
+# Start the claude command
+spawn claude migrate-installer
+
+# Wait for the confirmation prompt
+expect "*Press Enter to continue or Esc to exit*"
+send "\r\n"
+
+# Wait for the command to finish and pass control back
+expect eof
