@@ -29,7 +29,6 @@ the diff that lack corresponding tests.
 
 - Current branch: !`git branch --show-current`
 - Current git status: !`git status`
-- Files to check: $ARGUMENTS
 - Current git diff (staged changes): !`git diff --staged`
 
 -----

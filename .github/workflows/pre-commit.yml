@@ -17,4 +17,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}
       - uses: actions/checkout@v4
-      - uses: tox-dev/action-pre-commit-uv@v1
+      - name: pre-commit
+        run: pre-commit run --all-files
