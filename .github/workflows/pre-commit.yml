@@ -21,6 +21,8 @@ jobs:
         run: |
           pwd
           ls -a
+          git config --global --add safe.directory $(pwd)\
+          git config --list --show-origin
       - name: postCreateCommand
         run: .devcontainer/postCreateCommand || cat /github/home/.cache/pre-commit/pre-commit.log
       - name: postStartCommand & pre-commit all
