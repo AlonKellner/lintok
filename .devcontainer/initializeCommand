@@ -3,6 +3,7 @@ docker network create -d bridge $1 || true
 mkdir -p $2/.cache/uv
 mkdir -p $2/.cache/pre-commit
 mkdir -p $2/.cache/pip
+mkdir -p $2/.cache/trivy
 mkdir -p $2/.cursor
 mkdir -p $2/.ssh
 mkdir -p $2/.vscode-server

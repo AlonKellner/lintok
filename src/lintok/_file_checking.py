@@ -98,11 +98,18 @@ def check_file(file_path: Path, config: dict[str, Any], console: Console) -> boo
     return any_failed
 
 
-def check_files(paths: list[Path | str], honor_gitignore: bool = True) -> bool:
+def check_files(
+    paths: list[Path | str],
+    honor_gitignore: bool = True,
+    override_config: dict[str, Any] | None = None,
+) -> bool:
     """Check files in the given paths, optionally honoring .gitignore."""
     console = Console()
 
     config, project_root = find_and_load_config(Path.cwd())
+    if override_config:
+        for key, value in override_config.items():
+            config[key] = value
 
     if not honor_gitignore:
         config["honor_gitignore"] = False

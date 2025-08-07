@@ -72,6 +72,13 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+      - id: pip-audit
+        name: pip-audit (.venv)
+        description: check for known vulnerabilities in dependencies
+        entry: uvx pip-audit
+        language: system
+        files: ^(uv\.lock|requirements\.txt)$
+        pass_filenames: false
       - id: ruff-check-fix
         name: ruff check fix (.py)
         description: run ruff to check and fix Python code style issues
@@ -100,13 +107,13 @@ repos:
         language: system
         args: [--write-changes, --force-exclude]
         types: [text]
-      - id: lintok
-        name: lintok (all text)
-        description: check for files with too many tokens for AI agents
-        entry: uvx lintok
-        language: system
-        types: [text]
-        require_serial: true
+      # - id: lintok
+      #   name: lintok (all text)
+      #   description: check for files with too many tokens for AI agents
+      #   entry: uvx lintok
+      #   language: system
+      #   types: [text]
+      #   require_serial: true
       - id: tox
         name: tox (tests)
         description: run tox to check the project in different environments
@@ -119,3 +126,15 @@ repos:
         entry: .claude/claude-pre-commit.sh
         language: system
         pass_filenames: false
+      - id: trivy
+        name: trivy (all files)
+        description: scan repository for vulnerabilities, secrets, misconfigurations, and licenses
+        entry: trivy fs --scanners vuln,misconfig,license ./
+        language: system
+        pass_filenames: false
+      - id: trivy secrets
+        name: trivy secrets (all files)
+        description: scan repository for vulnerabilities, secrets, misconfigurations, and licenses
+        entry: bash -c 'for n in $(seq 0 "$#"); do trivy fs --scanners secret "${!n}"; done'
+        language: system
+        require_serial: true

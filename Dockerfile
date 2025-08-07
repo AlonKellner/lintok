@@ -1,5 +1,6 @@
 ARG BASE_IMAGE=mcr.microsoft.com/devcontainers/base:debian
 FROM $BASE_IMAGE AS base
+USER vscode
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     chmod +x $HOME/.local/bin/uv $HOME/.local/bin/uvx
 ENV PATH="/root/.local/bin/:$PATH"

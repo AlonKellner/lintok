@@ -13,5 +13,7 @@ def test_check_small_file() -> None:
 def test_check_large_file() -> None:
     """Test that the check_file function fails with a large file."""
     # Test with a file that is too large
-    result = lintok.check_files(["tests/sample_large_file.txt"])
+    result = lintok.check_files(
+        ["tests/sample_large_file.txt"], override_config={"exclude": None}
+    )
     assert result is False, "Expected the file to be too large"

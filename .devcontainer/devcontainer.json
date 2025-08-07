@@ -42,12 +42,13 @@
 		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cursor,dst=/home/vscode/.cursor,type=bind",
 		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/uv,dst=/home/vscode/.cache/uv,type=bind",
 		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pre-commit,dst=/home/vscode/.cache/pre-commit,type=bind",
-		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip,dst=/home/vscode/.cache/pip,type=bind"
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip,dst=/home/vscode/.cache/pip,type=bind",
+		"src=${localEnv:HOME}${localEnv:USERPROFILE}/.cache/trivy,dst=/home/vscode/.cache/trivy,type=bind"
 	],
 	"containerEnv": {
 		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}",
 		"LOCAL_USER_HOME": "${localEnv:HOME}${localEnv:USERPROFILE}",
-		"DOCKER_OPTIONS": "-v '${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig':/root/.gitconfig -v '${localEnv:HOME}${localEnv:USERPROFILE}/.ssh':/root/.ssh -v '${localEnv:HOME}${localEnv:USERPROFILE}/.vscode-server':/root/.vscode-server -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cursor':/root/.cursor -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/uv':/root/.cache/uv -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pre-commit':/root/.cache/pre-commit -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip':/root/.cache/pip",
+		"DOCKER_OPTIONS": "-v '${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig':/root/.gitconfig -v '${localEnv:HOME}${localEnv:USERPROFILE}/.ssh':/root/.ssh -v '${localEnv:HOME}${localEnv:USERPROFILE}/.vscode-server':/root/.vscode-server -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cursor':/root/.cursor -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/uv':/root/.cache/uv -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pre-commit':/root/.cache/pre-commit -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/pip':/root/.cache/pip -v '${localEnv:HOME}${localEnv:USERPROFILE}/.cache/trivy':/root/.cache/trivy",
 		"CONTAINER_IMAGE": "mcr.microsoft.com/devcontainers/base:debian",
 		"USERNAME": "vscode",
 		"COMPOSE_BAKE": "true"

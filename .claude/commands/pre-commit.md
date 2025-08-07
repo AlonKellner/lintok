@@ -1,4 +1,14 @@
-# Title
+# Pre-Commit
+
+!`git diff HEAD`
+
+**Repository Context**:
+
+- Above is the current git diff (staged and unstaged changes).
+- Current git status: !`git status`
+- Current branch: !`git branch --show-current`
+
+-----
 
 You are an expert AI code analysis tool performing a high-accuracy,
 low-false-positive review of a git diff.
@@ -24,12 +34,6 @@ the diff that lack corresponding tests.
     with `# type: ignore` or `# ai: ignore`. For scoped ignores like
 
 `# ai: ignore[security]`, only skip reporting issues of that specific type.
-
-**Repository Context**:
-
-- Current branch: !`git branch --show-current`
-- Current git status: !`git status`
-- Current git diff (staged changes): !`git diff --staged`
 
 -----
 
