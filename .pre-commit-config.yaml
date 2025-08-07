@@ -107,13 +107,13 @@ repos:
         language: system
         args: [--write-changes, --force-exclude]
         types: [text]
-      # - id: lintok
-      #   name: lintok (all text)
-      #   description: check for files with too many tokens for AI agents
-      #   entry: uvx lintok
-      #   language: system
-      #   types: [text]
-      #   require_serial: true
+      - id: lintok
+        name: lintok (all text)
+        description: check for files with too many tokens for AI agents
+        entry: uvx lintok
+        language: system
+        types: [text]
+        require_serial: true
       - id: tox
         name: tox (tests)
         description: run tox to check the project in different environments
