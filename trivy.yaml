@@ -1,14 +1,14 @@
 fs:
   skip-dirs:
-    - "**/.venv/"
-    - "**/__pycache__/"
-    - "**/.*cache/"
-    - "**/.output/"
-    - "**/.env/"
-    - "**/node_modules/"
-    - "**/.tox/"
+    - '**/**/.*cache/'
+    - '**/.env/'
+    - '**/.output/'
+    - '**/.tox/'
+    - '**/.venv/'
+    - '**/__pycache__/'
+    - '**/node_modules/'
   skip-files:
-    - "**/*.pyspy"
-    - "**/*.pickle"
-    - "**/.env*"
-    - "./src/_version.py"
+    - '**/*.pickle'
+    - '**/*.pyspy'
+    - '**/.env*'
+    - '**/src/_version.py'

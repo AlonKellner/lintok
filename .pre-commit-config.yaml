@@ -11,7 +11,7 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
-        args: ["--markdown-linebreak-ext=md"]
+        args: ["--markdown-linebreak-ext=md,mdc"]
       - id: check-added-large-files
         args: ["--maxkb=2000"]
   - repo: https://github.com/google/yamlfmt
@@ -20,12 +20,18 @@ repos:
       - id: yamlfmt
         name: yamlfmt (.yaml)
   - repo: https://github.com/biomejs/pre-commit
-    rev: v2.1.3
+    rev: v2.1.4
     hooks:
       - id: biome-check
         name: biomejs (.json, .js, .ts)
   - repo: local
     hooks:
+      - id: ties
+        name: ties (selected files)
+        description: synchronize chosen file contents
+        entry: uvx --from 'ties[yaml]' ties fix
+        language: system
+        pass_filenames: false
       - id: taplo-format
         name: taplo format (.toml)
         description: apply a consistent format to `*.toml` files
@@ -100,6 +106,12 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+      - id: claude-review
+        name: claude review (all text)
+        description: run Claude Code to review the code
+        entry: .claude/claude-pre-commit.sh
+        language: system
+        pass_filenames: false
       - id: typos
         name: typos (all text)
         description: check for typos in text files
@@ -118,12 +130,6 @@ repos:
         name: tox (tests)
         description: run tox to check the project in different environments
         entry: tox
-        language: system
-        pass_filenames: false
-      - id: claude-review
-        name: claude review (all text)
-        description: run Claude Code to review the code
-        entry: .claude/claude-pre-commit.sh
         language: system
         pass_filenames: false
       - id: trivy

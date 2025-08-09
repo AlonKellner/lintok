@@ -95,3 +95,20 @@ extend-exclude = [ "**/.env.*" ]
 package = true
 python-preference = "only-managed"
 link-mode = "copy"
+
+[tool.ties]
+[[tool.ties.tie]]
+name = ".gitignore -> trivy.yaml"
+source = ".gitignore"
+target = "trivy.yaml"
+transform = "transform:trivy_yaml"
+
+[[tool.ties.tie]]
+name = "mcp.json"
+source = ".ties/mcp.json"
+targets = [ ".mcp.json", ".cursor/mcp.json", "vscode/mcp.json" ]
+
+[[tool.ties.tie]]
+name = "Agent Instructions"
+source = ".ties/instructions.md"
+targets = [ "CLAUDE.md", ".cursor/rules/instructions.mdc", ".github/copilot-instructions.md" ]
