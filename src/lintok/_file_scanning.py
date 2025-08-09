@@ -6,11 +6,10 @@ from typing import Any
 import pathspec
 
 
-def _gather_files(paths: list[str]) -> set[Path]:
+def _gather_files(paths: list[Path]) -> set[Path]:
     """Collect all files from the given paths."""
     all_files: set[Path] = set()
-    for path_str in paths:
-        path = Path(path_str)
+    for path in paths:
         if not path.exists():
             continue
         if path.is_dir():
@@ -64,7 +63,7 @@ def _apply_manual_exclude(
 
 
 def get_files_to_check(
-    paths: list[str], config: dict[str, Any], project_root: Path | None
+    paths: list[Path], config: dict[str, Any], project_root: Path | None
 ) -> set[Path]:
     """Gather all files from paths, handling directories, and apply exclusion patterns."""
     all_files = _gather_files(paths)

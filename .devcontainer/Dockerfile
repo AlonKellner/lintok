@@ -18,7 +18,8 @@ RUN DEBIAN_FRONTEND=noninteractive mkdir -p /home/vscode/.cache && chmod 777 /ho
     | gzip -d - | install -m 755 /dev/stdin /usr/local/bin/taplo && taplo --version && \
     curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     echo nodejs && apt-get install -y nodejs && npm install -g npm@latest && node -v && npm -v && \
-    echo claude && npm install -g @anthropic-ai/claude-code && claude --version
+    echo claude && npm install -g @anthropic-ai/claude-code && claude --version && \
+    echo pyright && npm install -g pyright && pyright --version
 
 COPY ./.devcontainer/migrate_claude.exp ./
 USER vscode

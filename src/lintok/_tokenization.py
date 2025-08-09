@@ -33,6 +33,7 @@ def _get_anthropic_tokenizer(config: dict[str, Any]) -> Callable[[str], int] | N
 
     # Return a function that calls the correct method with the required structure
     def count_tokens(text: str) -> int:
+        assert _anthropic_client is not None
         return _anthropic_client.messages.count_tokens(
             model=model, messages=[{"role": "user", "content": text}]
         ).input_tokens

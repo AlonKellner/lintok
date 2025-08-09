@@ -114,14 +114,14 @@ def check_files(
     if not honor_gitignore:
         config["honor_gitignore"] = False
 
-    paths = [Path(p) for p in paths]
+    _paths: list[Path] = [Path(p) for p in paths]
 
-    for path in paths:
+    for path in _paths:
         if not path.exists():
             console.print(f"[bold red]Path does not exist: {path}[/bold red]")
             raise ValueError(f"Path does not exist: {path}")
 
-    files_to_process = get_files_to_check(paths, config, project_root)
+    files_to_process = get_files_to_check(_paths, config, project_root)
     text_files = {f for f in files_to_process if is_text_file(f)}
 
     if not text_files:
